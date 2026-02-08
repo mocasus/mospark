@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[70vh] bg-gray-100 py-12">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl">
+        <h2 class="text-3xl font-bold mb-6 text-center text-red-600">{{ action }} Menu</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Name -->
+                <div class="md:col-span-2">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Nama Menu</label>
+                    <input type="text" name="name" id="name" value="{{ item['name'] if item else '' }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: Seblak Spesial Komplit" required>
+                </div>
+
+                <!-- Description -->
+                <div class="md:col-span-2">
+                    <label for="description" class="block text-gray-700 font-bold mb-2">Deskripsi</label>
+                    <textarea name="description" id="description" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Isian: Kerupuk, Baso, Sosis, Ceker...">{{ item['description'] if item else '' }}</textarea>
+                </div>
+
+                <!-- Price -->
+                <div>
+                    <label for="price" class="block text-gray-700 font-bold mb-2">Harga (Rp)</label>
+                    <input type="number" name="price" id="price" value="{{ item['price'] if item else '' }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: 15000" required>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-gray-700 font-bold mb-2">Kategori</label>
+                    <select name="category" id="category" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                        <option value="Seblak" {% if item and item['category'] == 'Seblak' %}selected{% endif %}>Seblak</option>
+                        <option value="Cilok" {% if item and item['category'] == 'Cilok' %}selected{% endif %}>Cilok</option>
+                        <option value="Baso Aci" {% if item and item['category'] == 'Baso Aci' %}selected{% endif %}>Baso Aci</option>
+                        <option value="Minuman" {% if item and item['category'] == 'Minuman' %}selected{% endif %}>Minuman</option>
+                        <option value="Lainnya" {% if item and item['category'] == 'Lainnya' %}selected{% endif %}>Lainnya</option>
+                    </select>
+                </div>
+
+                <!-- Image URL -->
+                <div class="md:col-span-2">
+                    <label for="image_url" class="block text-gray-700 font-bold mb-2">URL Gambar (Opsional)</label>
+                    <input type="url" name="image_url" id="image_url" value="{{ item['image_url'] if item else '' }}" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="https://example.com/seblak.jpg">
+                    <p class="text-xs text-gray-500 mt-1">Gunakan link gambar langsung (cth: dari Unsplash atau Imgur).</p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end gap-4">
+                <a href="/admin" class="px-6 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-lg transition">Batal</a>
+                <button type="submit" class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition">
+                    Simpan Menu
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

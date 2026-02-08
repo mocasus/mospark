@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<header class="bg-gradient-to-r from-red-600 to-red-500 text-white pt-20 pb-24 text-center">
+    <div class="container mx-auto px-4">
+        <h1 class="text-5xl font-extrabold mb-4 leading-tight">Dapur Cilok</h1>
+        <p class="text-xl md:text-2xl mb-8 font-light text-red-100">Pedas Nampol, Rasa Rumahan! Siap bikin harimu makin semangat.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#menu" class="bg-yellow-400 text-red-700 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-yellow-300 transition transform hover:scale-105">Lihat Menu</a>
+            <a href="https://wa.me/6281234567890?text=Halo%20Dapur%20Cilok%2C%20saya%20mau%20pesan%20dong!" class="bg-white text-red-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition transform hover:scale-105 border-2 border-transparent">
+                <i class="fab fa-whatsapp text-lg mr-2"></i> Pesan via WA
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class="py-16 bg-white">
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+        <h2 class="text-3xl font-bold mb-8 text-gray-800 border-b-4 border-yellow-400 inline-block pb-2">Cerita Kami</h2>
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            Berawal dari kecintaan kami pada jajanan khas Bandung, <strong>Dapur Cilok</strong> hadir untuk memuaskan hasrat pecinta pedas. Kami menggunakan resep rahasia keluarga dengan rempah pilihan yang berkualitas. Tanpa pengawet, murni dari bahan alami, dan dimasak dengan penuh cinta.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <div class="p-6 bg-red-50 rounded-xl">
+                <i class="fas fa-pepper-hot text-4xl text-red-500 mb-4"></i>
+                <h3 class="font-bold text-xl mb-2">Pedas Mantap</h3>
+                <p class="text-gray-500">Level pedas bisa disesuaikan dengan nyalimu!</p>
+            </div>
+            <div class="p-6 bg-yellow-50 rounded-xl">
+                <i class="fas fa-home text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="font-bold text-xl mb-2">Rasa Rumahan</h3>
+                <p class="text-gray-500">Bumbu asli tanpa bahan aneh-aneh.</p>
+            </div>
+            <div class="p-6 bg-green-50 rounded-xl">
+                <i class="fas fa-utensils text-4xl text-green-500 mb-4"></i>
+                <h3 class="font-bold text-xl mb-2">Menu Variatif</h3>
+                <p class="text-gray-500">Seblak, Cilok, Baso Aci, semua ada!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Menu Section -->
+<section id="menu" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 border-b-4 border-red-500 inline-block pb-2">Menu Favorit</h2>
+            <p class="text-gray-500 mt-4">Pilih jajanan kesukaanmu sekarang!</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in menu_items %}
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="relative h-48 bg-gray-200 overflow-hidden">
+                    {% if item['image_url'] %}
+                        <img src="{{ item['image_url'] }}" alt="{{ item['name'] }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    {% else %}
+                        <div class="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
+                            <i class="fas fa-image text-4xl"></i>
+                        </div>
+                    {% endif %}
+                    <div class="absolute top-2 right-2 bg-yellow-400 text-red-800 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wide shadow-sm">
+                        {{ item['category'] }}
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2 text-gray-800 group-hover:text-red-600 transition">{{ item['name'] }}</h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2 h-10">{{ item['description'] }}</p>
+                    <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
+                        <span class="text-red-600 font-bold text-lg">Rp {{ "{:,.0f}".format(item['price']).replace(',', '.') }}</span>
+                        <a href="https://wa.me/6281234567890?text=Halo%20kak%2C%20saya%20mau%20pesan%20{{ item['name'] }}%20nya%20satu." target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition">
+                            <i class="fab fa-whatsapp"></i> Pesan
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-span-full text-center py-12">
+                <p class="text-gray-400 text-lg">Belum ada menu yang tersedia. Silakan cek kembali nanti!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-12 text-gray-800">Apa Kata Mereka?</h2>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
+                <i class="fas fa-quote-left text-gray-300 text-4xl absolute top-4 left-4 opacity-50"></i>
+                <p class="text-gray-600 italic mb-4 pt-8">"Gila sih seblaknya, pedesnya nampol banget tapi nagih! Kuahnya kental, isiannya banyak. Wajib coba!"</p>
+                <div class="font-bold text-gray-800">- Kak Dinda, Mahasiswa</div>
+            </div>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
+                <i class="fas fa-quote-left text-gray-300 text-4xl absolute top-4 left-4 opacity-50"></i>
+                <p class="text-gray-600 italic mb-4 pt-8">"Ciloknya empuk, bumbu kacangnya gurih. Pas banget buat cemilan sore sama temen kantor."</p>
+                <div class="font-bold text-gray-800">- Mas Budi, Karyawan Swasta</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location -->
+<section id="location" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-8 text-gray-800">Lokasi Kami</h2>
+        <p class="text-gray-500 mb-8">Datang dan rasakan langsung sensasinya!</p>
+        <div class="bg-white p-2 rounded-xl shadow-lg max-w-4xl mx-auto">
+            <!-- Example Google Maps Embed (Using a generic location for demonstration) -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.833983283187!2d107.61912281530264!3d-6.914744369599298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e64c5e8866e5%3A0x37be7ac9d575f7ed!2sGedung%20Sate!5e0!3m2!1sen!2sid!4v1625642735999!5m2!1sen!2sid"
+                width="100%" height="400" style="border:0; border-radius: 0.75rem;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="mt-8">
+            <a href="https://maps.google.com" target="_blank" class="inline-flex items-center text-red-600 font-bold hover:underline">
+                <i class="fas fa-directions mr-2"></i> Petunjuk Arah Google Maps
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
